@@ -13,7 +13,7 @@ The whip MVP roadmap builds browser-to-macOS remote control incrementally over 5
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Core Infrastructure** - FastAPI server, WebSocket, static files, message protocol
-- [ ] **Phase 2: Browser Input Capture** - Canvas interface capturing mouse and keyboard events
+- [x] **Phase 2: Browser Input Capture** - Canvas interface capturing mouse and keyboard events
 - [ ] **Phase 3: macOS Control Integration** - Mouse and keyboard control via pynput
 - [ ] **Phase 4: Coordinate Mapping** - Accurate browser-to-screen coordinate transformation
 - [ ] **Phase 5: Setup & Documentation** - Installation instructions, permissions, README polish
@@ -51,8 +51,8 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Full-screen canvas with mouse movement and click capture
-- [ ] 02-02-PLAN.md — Keyboard capture and default behavior prevention
+- [x] 02-01-PLAN.md — Full-screen canvas with mouse movement and click capture
+- [x] 02-02-PLAN.md — Keyboard capture and default behavior prevention
 
 ### Phase 3: macOS Control Integration
 **Goal**: Server controls macOS cursor and keyboard based on received events
@@ -65,10 +65,11 @@ Plans:
   4. Server checks for Accessibility permissions on startup
   5. Server displays clear error message if permissions are missing
   6. User can grant permissions and server works after permission granted
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (will be created during planning)
+- [ ] 03-01-PLAN.md — Permission checking and pynput controller modules
+- [ ] 03-02-PLAN.md — Event consumer integration with human verification
 
 ### Phase 4: Coordinate Mapping
 **Goal**: Browser coordinates map accurately to screen pixels across different resolutions and displays
@@ -108,7 +109,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Core Infrastructure | 3/3 | Complete | 2026-02-09 |
-| 2. Browser Input Capture | 0/2 | Planned | - |
-| 3. macOS Control Integration | 0/? | Not started | - |
+| 2. Browser Input Capture | 2/2 | Complete | 2026-02-09 |
+| 3. macOS Control Integration | 0/2 | Planned | - |
 | 4. Coordinate Mapping | 0/? | Not started | - |
 | 5. Setup & Documentation | 0/? | Not started | - |
