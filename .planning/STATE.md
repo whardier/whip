@@ -10,29 +10,29 @@ See: .planning/PROJECT.md (updated 2026-02-09)
 ## Current Position
 
 Phase: 2 of 5 (Browser Input Capture)
-Plan: 1 of 2 in current phase
-Status: Executing
-Last activity: 2026-02-09 — Completed plan 02-01
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-02-09 — Completed plan 02-02
 
-Progress: [██████░░░░] 24%
+Progress: [██████░░░░] 29%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 2 min
-- Total execution time: 0.15 hours
+- Total plans completed: 5
+- Average duration: 5 min
+- Total execution time: 0.57 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1 - Core Infrastructure | 3 | 8 min | 3 min |
-| 2 - Browser Input Capture | 1 | 1 min | 1 min |
+| 2 - Browser Input Capture | 2 | 25 min | 13 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (3 min), 01-02 (3 min), 01-03 (2 min), 02-01 (1 min)
-- Trend: Excellent velocity
+- Last 5 plans: 01-02 (3 min), 01-03 (2 min), 02-01 (1 min), 02-02 (24 min)
+- Trend: Good velocity
 
 *Updated after each plan completion*
 
@@ -63,6 +63,10 @@ Recent decisions affecting current work:
 - Canvas crosshair cursor (02-01: visual feedback for input capture mode)
 - Window mouseup listener (02-01: catches releases outside canvas bounds)
 - Dark canvas background #1a1a2e (02-01: reduces eye strain)
+- Filter auto-repeat events (02-02: Phase 3 macOS control handles key timing)
+- Preserve browser shortcuts (02-02: allow Ctrl/Cmd for debugging)
+- Prevent navigation keys (02-02: arrows, spacebar, Tab don't scroll)
+- Auto-focus canvas on connection (02-02: keyboard works immediately)
 
 ### Pending Todos
 
@@ -75,5 +79,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-09
-Stopped at: Completed 02-01-PLAN.md execution
-Resume file: .planning/phases/02-browser-input-capture/02-01-SUMMARY.md
+Stopped at: Completed 02-02-PLAN.md execution (Phase 2 complete)
+Resume file: .planning/phases/02-browser-input-capture/02-02-SUMMARY.md
