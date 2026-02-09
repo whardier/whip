@@ -14,8 +14,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Core Infrastructure** - FastAPI server, WebSocket, static files, message protocol
 - [x] **Phase 2: Browser Input Capture** - Canvas interface capturing mouse and keyboard events
-- [ ] **Phase 3: macOS Control Integration** - Mouse and keyboard control via pynput
-- [ ] **Phase 4: Coordinate Mapping** - Accurate browser-to-screen coordinate transformation
+- [x] **Phase 3: macOS Control Integration** - Mouse and keyboard control via pynput
+- [ ] **Phase 4: Coordinate Mapping** - Accurate coordinate mapping and keyboard repeat
 - [ ] **Phase 5: Setup & Documentation** - Installation instructions, permissions, README polish
 
 ## Phase Details
@@ -68,23 +68,25 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Permission checking and pynput controller modules
-- [ ] 03-02-PLAN.md — Event consumer integration with human verification
+- [x] 03-01-PLAN.md — Permission checking and pynput controller modules
+- [x] 03-02-PLAN.md — Event consumer integration with human verification
 
 ### Phase 4: Coordinate Mapping
-**Goal**: Browser coordinates map accurately to screen pixels across different resolutions and displays
+**Goal**: Browser coordinates map accurately to screen pixels across different resolutions and displays, keyboard repeat works correctly
 **Depends on**: Phase 3 (requires cursor control working)
-**Requirements**: COORD-01, COORD-02, COORD-03, COORD-04, COORD-05
+**Requirements**: COORD-01, COORD-02, COORD-03, COORD-04, COORD-05 + Keyboard Repeat
 **Success Criteria** (what must be TRUE):
   1. Browser sends normalized coordinates (0-1 range) instead of pixel values
   2. Server detects macOS screen resolution and stores it
   3. Server maps normalized coordinates to absolute screen pixels correctly
   4. Coordinate mapping works accurately on Retina/HiDPI displays
   5. Clicking corners of canvas moves cursor to corners of screen
-**Plans**: TBD
+  6. Holding a key produces repeated characters with proper delay and rate
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (will be created during planning)
+- [ ] 04-01-PLAN.md — Server-side keyboard repeat with asyncio timers
+- [ ] 04-02-PLAN.md — Coordinate mapping verification checkpoint
 
 ### Phase 5: Setup & Documentation
 **Goal**: User can install, configure, and run whip following clear documentation
@@ -110,6 +112,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Core Infrastructure | 3/3 | Complete | 2026-02-09 |
 | 2. Browser Input Capture | 2/2 | Complete | 2026-02-09 |
-| 3. macOS Control Integration | 0/2 | Planned | - |
-| 4. Coordinate Mapping | 0/? | Not started | - |
+| 3. macOS Control Integration | 2/2 | Complete | 2026-02-09 |
+| 4. Coordinate Mapping | 0/2 | Planned | - |
 | 5. Setup & Documentation | 0/? | Not started | - |
