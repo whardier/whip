@@ -9,6 +9,7 @@ from whip.protocol import MessageType
 from whip.queue import EventQueue
 from whip.permissions import check_accessibility_permission, print_permission_instructions
 from whip.controller import InputController
+from whip.repeat import KeyRepeatManager
 
 # Configure logging
 logging.basicConfig(
@@ -60,6 +61,7 @@ class ConnectionManager:
 manager = ConnectionManager()
 event_queue = EventQueue()
 input_controller: InputController | None = None
+repeat_manager: KeyRepeatManager | None = None
 
 
 async def event_consumer():
@@ -69,7 +71,7 @@ async def event_consumer():
     the async event loop (pynput operations are synchronous).
     """
     import asyncio
-    global input_controller
+    global input_controller, repeat_manager
     if input_controller is None:
         return
 
@@ -100,13 +102,19 @@ async def event_consumer():
                     data.get("x", 0), data.get("y", 0)
                 )
             elif msg_type == MessageType.KEY_DOWN:
-                await loop.run_in_executor(
-                    None, input_controller.key_down, data.get("key", ""), data.get("code", "")
-                )
+                key = data.get("key", "")
+                code = data.get("code", "")
+                await loop.run_in_executor(None, input_controller.key_down, key, code)
+                # Start repeat timer for this key
+                if repeat_manager is not None:
+                    repeat_manager.start_repeat(key, code)
             elif msg_type == MessageType.KEY_UP:
-                await loop.run_in_executor(
-                    None, input_controller.key_up, data.get("key", ""), data.get("code", "")
-                )
+                key = data.get("key", "")
+                code = data.get("code", "")
+                # Stop repeat timer before releasing key
+                if repeat_manager is not None:
+                    repeat_manager.stop_repeat(key)
+                await loop.run_in_executor(None, input_controller.key_up, key, code)
         except Exception as e:
             logger.error(f"Event processing failed: {e}", exc_info=True)
 
@@ -164,7 +172,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
 @app.on_event("startup")
 async def startup_event():
-    global input_controller
+    global input_controller, repeat_manager
 
     logger.info("WHIP server starting...")
     logger.info("Checking Accessibility permissions...")
@@ -181,6 +189,7 @@ async def startup_event():
     else:
         logger.info("Accessibility permission: OK")
         input_controller = InputController()
+        repeat_manager = KeyRepeatManager(input_controller)
         logger.info(f"Screen size: {input_controller._screen_width}x{input_controller._screen_height}")
 
         # Start background consumer task
