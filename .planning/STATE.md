@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-09)
 ## Current Position
 
 Phase: 3 of 5 (macOS Control Integration)
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-02-09 — Completed plan 03-01
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-02-09 — Completed plan 03-02
 
-Progress: [██████░░░░] 35%
+Progress: [███████░░░] 41%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
-- Average duration: 5 min
-- Total execution time: 0.60 hours
+- Total plans completed: 7
+- Average duration: 6 min
+- Total execution time: 1.02 hours
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [██████░░░░] 35%
 |-------|-------|-------|----------|
 | 1 - Core Infrastructure | 3 | 8 min | 3 min |
 | 2 - Browser Input Capture | 2 | 25 min | 13 min |
-| 3 - macOS Control Integration | 1 | 2 min | 2 min |
+| 3 - macOS Control Integration | 2 | 17 min | 9 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-03 (2 min), 02-01 (1 min), 02-02 (24 min), 03-01 (2 min)
+- Last 5 plans: 02-01 (1 min), 02-02 (24 min), 03-01 (2 min), 03-02 (15 min)
 - Trend: Excellent velocity
 
 *Updated after each plan completion*
@@ -72,6 +72,11 @@ Recent decisions affecting current work:
 - Test mouse movement to detect Accessibility permission (03-01: no native Python API)
 - Cache screen dimensions at init (03-01: performance optimization)
 - Normalized coordinates for input (03-01: resolution-independent)
+- Start server even without permissions but warn clearly (03-02: better UX than crash)
+- Background asyncio task for event consumption (03-02: non-blocking WebSocket handler)
+- 5 decimal place precision for coordinates (03-02: sufficient for pixel-level accuracy)
+- Python logging module with proper log levels (03-02: debug for high-frequency, info for startup)
+- Keep print() for permission instructions (03-02: user-facing, should always show)
 
 ### Pending Todos
 
@@ -84,5 +89,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-09
-Stopped at: Completed 03-01-PLAN.md execution
-Resume file: .planning/phases/03-macos-control-integration/03-01-SUMMARY.md
+Stopped at: Completed 03-02-PLAN.md execution (Phase 3 complete)
+Resume file: .planning/phases/03-macos-control-integration/03-02-SUMMARY.md
