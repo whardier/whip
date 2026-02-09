@@ -149,7 +149,7 @@ class InputController:
         Returns:
             pynput Key enum for special keys, or the character string for regular keys
         """
-        # Special keys mapping
+        # Special keys mapping (only keys that exist in pynput.keyboard.Key)
         special_keys = {
             "Enter": Key.enter,
             "Tab": Key.tab,
@@ -188,13 +188,12 @@ class InputController:
             "F10": Key.f10,
             "F11": Key.f11,
             "F12": Key.f12,
-            # Other special keys
+            # Other special keys (only those supported by pynput)
             "Home": Key.home,
             "End": Key.end,
             "PageUp": Key.page_up,
             "PageDown": Key.page_down,
-            "Insert": Key.insert,
-            "CapsLock": Key.caps_lock,
+            # Note: Insert and CapsLock not in pynput.Key enum
         }
 
         # Return mapped special key if found, otherwise return character as-is
