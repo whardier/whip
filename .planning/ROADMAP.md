@@ -30,10 +30,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. WebSocket connection establishes between browser and server
   4. Server receives test messages from browser and echoes them back
   5. Server handles disconnects gracefully without crashing
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] TBD (will be created during planning)
+- [ ] 01-01-PLAN.md — Project setup and FastAPI server with static files (port 9447)
+- [ ] 01-02-PLAN.md — WebSocket endpoint with JSON message protocol and echo
+- [ ] 01-03-PLAN.md — Smart event queue with mouse dedup and keyboard FIFO
 
 ### Phase 2: Browser Input Capture
 **Goal**: Full-screen canvas captures all mouse and keyboard activity and transmits to server
@@ -104,7 +106,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Core Infrastructure | 0/? | Not started | - |
+| 1. Core Infrastructure | 0/3 | Planned | - |
 | 2. Browser Input Capture | 0/? | Not started | - |
 | 3. macOS Control Integration | 0/? | Not started | - |
 | 4. Coordinate Mapping | 0/? | Not started | - |
