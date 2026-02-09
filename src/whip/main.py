@@ -106,11 +106,11 @@ async def websocket_endpoint(websocket: WebSocket):
                 # Log incoming event for debugging
                 event_data = data.get("data", {})
                 if msg_type == MessageType.MOUSE_MOVE:
-                    print(f"[MOUSE] move x={event_data.get('x', 0):.3f} y={event_data.get('y', 0):.3f}")
+                    print(f"[MOUSE] move x={event_data.get('x', 0):.5f} y={event_data.get('y', 0):.5f}")
                 elif msg_type == MessageType.MOUSE_DOWN:
-                    print(f"[MOUSE] down button={event_data.get('button')} x={event_data.get('x', 0):.3f} y={event_data.get('y', 0):.3f}")
+                    print(f"[MOUSE] down button={event_data.get('button')} x={event_data.get('x', 0):.5f} y={event_data.get('y', 0):.5f}")
                 elif msg_type == MessageType.MOUSE_UP:
-                    print(f"[MOUSE] up button={event_data.get('button')} x={event_data.get('x', 0):.3f} y={event_data.get('y', 0):.3f}")
+                    print(f"[MOUSE] up button={event_data.get('button')} x={event_data.get('x', 0):.5f} y={event_data.get('y', 0):.5f}")
                 elif msg_type == MessageType.KEY_DOWN:
                     print(f"[KEY] down key={event_data.get('key')} code={event_data.get('code')}")
                 elif msg_type == MessageType.KEY_UP:
