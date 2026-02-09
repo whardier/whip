@@ -12,7 +12,7 @@ The whip MVP roadmap builds browser-to-macOS remote control incrementally over 5
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Core Infrastructure** - FastAPI server, WebSocket, static files, message protocol
+- [x] **Phase 1: Core Infrastructure** - FastAPI server, WebSocket, static files, message protocol
 - [ ] **Phase 2: Browser Input Capture** - Canvas interface capturing mouse and keyboard events
 - [ ] **Phase 3: macOS Control Integration** - Mouse and keyboard control via pynput
 - [ ] **Phase 4: Coordinate Mapping** - Accurate browser-to-screen coordinate transformation
@@ -33,9 +33,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans:** 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Project setup and FastAPI server with static files (port 9447)
-- [ ] 01-02-PLAN.md — WebSocket endpoint with JSON message protocol and echo
-- [ ] 01-03-PLAN.md — Smart event queue with mouse dedup and keyboard FIFO
+- [x] 01-01-PLAN.md — Project setup and FastAPI server with static files (port 9447)
+- [x] 01-02-PLAN.md — WebSocket endpoint with JSON message protocol and echo
+- [x] 01-03-PLAN.md — Smart event queue with mouse dedup and keyboard FIFO
 
 ### Phase 2: Browser Input Capture
 **Goal**: Full-screen canvas captures all mouse and keyboard activity and transmits to server
@@ -48,10 +48,11 @@ Plans:
   4. Canvas captures keyboard presses and sends key codes
   5. Context menus and text selection are prevented on canvas
   6. Connection status indicator shows connected/disconnected state
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (will be created during planning)
+- [ ] 02-01-PLAN.md — Full-screen canvas with mouse movement and click capture
+- [ ] 02-02-PLAN.md — Keyboard capture and default behavior prevention
 
 ### Phase 3: macOS Control Integration
 **Goal**: Server controls macOS cursor and keyboard based on received events
@@ -106,8 +107,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Core Infrastructure | 0/3 | Planned | - |
-| 2. Browser Input Capture | 0/? | Not started | - |
+| 1. Core Infrastructure | 3/3 | Complete | 2026-02-09 |
+| 2. Browser Input Capture | 0/2 | Planned | - |
 | 3. macOS Control Integration | 0/? | Not started | - |
 | 4. Coordinate Mapping | 0/? | Not started | - |
 | 5. Setup & Documentation | 0/? | Not started | - |
