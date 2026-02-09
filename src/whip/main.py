@@ -1,5 +1,6 @@
 import signal
 import sys
+import logging
 from pathlib import Path
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
@@ -8,6 +9,14 @@ from whip.protocol import MessageType
 from whip.queue import EventQueue
 from whip.permissions import check_accessibility_permission, print_permission_instructions
 from whip.controller import InputController
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    datefmt='%H:%M:%S'
+)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="WHIP - Web Host Input Protocol")
 
@@ -40,12 +49,12 @@ class ConnectionManager:
         """Accept and register a WebSocket connection."""
         await websocket.accept()
         self.active_connection = websocket
-        print("Client connected")
+        logger.info("Client connected")
 
     def disconnect(self):
         """Unregister the active connection."""
         self.active_connection = None
-        print("Client disconnected")
+        logger.info("Client disconnected")
 
 
 manager = ConnectionManager()
@@ -79,7 +88,7 @@ async def event_consumer():
             elif msg_type == MessageType.KEY_UP:
                 input_controller.key_up(data.get("key", ""), data.get("code", ""))
         except Exception as e:
-            print(f"[ERROR] Event processing failed: {e}")
+            logger.error(f"Event processing failed: {e}", exc_info=True)
 
 
 @app.get("/")
@@ -106,17 +115,17 @@ async def websocket_endpoint(websocket: WebSocket):
                 # Log incoming event for debugging
                 event_data = data.get("data", {})
                 if msg_type == MessageType.MOUSE_MOVE:
-                    print(f"[MOUSE] move x={event_data.get('x', 0):.5f} y={event_data.get('y', 0):.5f}")
+                    logger.debug(f"MOUSE move x={event_data.get('x', 0):.5f} y={event_data.get('y', 0):.5f}")
                 elif msg_type == MessageType.MOUSE_DOWN:
-                    print(f"[MOUSE] down button={event_data.get('button')} x={event_data.get('x', 0):.5f} y={event_data.get('y', 0):.5f}")
+                    logger.debug(f"MOUSE down button={event_data.get('button')} x={event_data.get('x', 0):.5f} y={event_data.get('y', 0):.5f}")
                 elif msg_type == MessageType.MOUSE_UP:
-                    print(f"[MOUSE] up button={event_data.get('button')} x={event_data.get('x', 0):.5f} y={event_data.get('y', 0):.5f}")
+                    logger.debug(f"MOUSE up button={event_data.get('button')} x={event_data.get('x', 0):.5f} y={event_data.get('y', 0):.5f}")
                 elif msg_type == MessageType.KEY_DOWN:
-                    print(f"[KEY] down key={event_data.get('key')} code={event_data.get('code')}")
+                    logger.debug(f"KEY down key={event_data.get('key')} code={event_data.get('code')}")
                 elif msg_type == MessageType.KEY_UP:
-                    print(f"[KEY] up key={event_data.get('key')} code={event_data.get('code')}")
+                    logger.debug(f"KEY up key={event_data.get('key')} code={event_data.get('code')}")
                 else:
-                    print(f"[EVENT] {msg_type}: {event_data}")
+                    logger.debug(f"EVENT {msg_type}: {event_data}")
 
                 # Queue for processing (Phase 3 will consume)
                 await event_queue.put(data)
@@ -129,7 +138,7 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         manager.disconnect()
     except Exception as e:
-        print(f"WebSocket error: {e}")
+        logger.error(f"WebSocket error: {e}", exc_info=True)
         manager.disconnect()
 
 
@@ -137,8 +146,8 @@ async def websocket_endpoint(websocket: WebSocket):
 async def startup_event():
     global input_controller
 
-    print("WHIP server starting...")
-    print("Checking Accessibility permissions...")
+    logger.info("WHIP server starting...")
+    logger.info("Checking Accessibility permissions...")
 
     if not check_accessibility_permission():
         print("\n" + "="*60)
@@ -150,13 +159,13 @@ async def startup_event():
         print("Grant permission and restart the server.")
         print("="*60 + "\n")
     else:
-        print("Accessibility permission: OK")
+        logger.info("Accessibility permission: OK")
         input_controller = InputController()
-        print(f"Screen size: {input_controller._screen_width}x{input_controller._screen_height}")
+        logger.info(f"Screen size: {input_controller._screen_width}x{input_controller._screen_height}")
 
         # Start background consumer task
         import asyncio
         asyncio.create_task(event_consumer())
-        print("Event consumer started")
+        logger.info("Event consumer started")
 
-    print(f"\nWHIP server running at http://0.0.0.0:9447")
+    logger.info(f"WHIP server running at http://0.0.0.0:9447")
