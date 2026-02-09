@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Core Infrastructure** - FastAPI server, WebSocket, static files, message protocol
 - [x] **Phase 2: Browser Input Capture** - Canvas interface capturing mouse and keyboard events
 - [x] **Phase 3: macOS Control Integration** - Mouse and keyboard control via pynput
-- [ ] **Phase 4: Coordinate Mapping** - Accurate coordinate mapping and keyboard repeat
+- [x] **Phase 4: Coordinate Mapping** - Accurate coordinate mapping and keyboard repeat
 - [ ] **Phase 5: Setup & Documentation** - Installation instructions, permissions, README polish
 
 ## Phase Details
@@ -85,8 +85,8 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — Server-side keyboard repeat with asyncio timers
-- [ ] 04-02-PLAN.md — Coordinate mapping verification checkpoint
+- [x] 04-01-PLAN.md — Server-side keyboard repeat with asyncio timers
+- [x] 04-02-PLAN.md — Coordinate mapping verification checkpoint
 
 ### Phase 5: Setup & Documentation
 **Goal**: User can install, configure, and run whip following clear documentation
@@ -98,10 +98,10 @@ Plans:
   3. README includes instructions for starting the server
   4. README includes the URL for accessing the web interface
   5. Project includes pyproject.toml with all required dependencies listed
-**Plans**: TBD
+**Plans:** 1 plan
 
 Plans:
-- [ ] TBD (will be created during planning)
+- [ ] 05-01-PLAN.md — Create README with installation, permissions, and usage instructions
 
 ## Progress
 
@@ -113,5 +113,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Core Infrastructure | 3/3 | Complete | 2026-02-09 |
 | 2. Browser Input Capture | 2/2 | Complete | 2026-02-09 |
 | 3. macOS Control Integration | 2/2 | Complete | 2026-02-09 |
-| 4. Coordinate Mapping | 0/2 | Planned | - |
-| 5. Setup & Documentation | 0/? | Not started | - |
+| 4. Coordinate Mapping | 2/2 | Complete | 2026-02-09 |
+| 5. Setup & Documentation | 0/1 | Planned | - |
