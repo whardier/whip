@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-09)
 ## Current Position
 
 Phase: 1 of 5 (Core Infrastructure)
-Plan: 2 of 3 in current phase
+Plan: 3 of 3 in current phase
 Status: Executing
-Last activity: 2026-02-09 — Completed plan 01-02
+Last activity: 2026-02-09 — Completed plan 01-03
 
-Progress: [████░░░░░░] 12%
+Progress: [█████░░░░░] 18%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
+- Total plans completed: 3
 - Average duration: 3 min
-- Total execution time: 0.1 hours
+- Total execution time: 0.13 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 - Core Infrastructure | 2 | 6 min | 3 min |
+| 1 - Core Infrastructure | 3 | 8 min | 3 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (3 min), 01-02 (3 min)
-- Trend: Consistent velocity
+- Last 5 plans: 01-01 (3 min), 01-02 (3 min), 01-03 (2 min)
+- Trend: Improving velocity
 
 *Updated after each plan completion*
 
@@ -54,6 +54,10 @@ Recent decisions affecting current work:
 - Single connection limit (01-02: MVP simplification for single-user use case)
 - JSON protocol over binary (01-02: easier debugging, sufficient performance)
 - Client-side auto-reconnect (01-02: better UX for network reliability)
+- Mouse deduplication keeps only latest position (01-03: prevents lag accumulation)
+- Keyboard events strict FIFO, never dropped (01-03: correctness requirement)
+- Flush pending mouse on keyboard arrival (01-03: maintains logical ordering)
+- asyncio.Lock for thread safety (01-03: concurrent access from WebSocket)
 
 ### Pending Todos
 
@@ -66,5 +70,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-09
-Stopped at: Completed 01-02-PLAN.md execution
-Resume file: .planning/phases/01-core-infrastructure/01-02-SUMMARY.md
+Stopped at: Completed 01-03-PLAN.md execution
+Resume file: .planning/phases/01-core-infrastructure/01-03-SUMMARY.md
