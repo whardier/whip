@@ -9,29 +9,30 @@ See: .planning/PROJECT.md (updated 2026-02-09)
 
 ## Current Position
 
-Phase: 1 of 5 (Core Infrastructure)
-Plan: 3 of 3 in current phase
+Phase: 2 of 5 (Browser Input Capture)
+Plan: 1 of 2 in current phase
 Status: Executing
-Last activity: 2026-02-09 — Completed plan 01-03
+Last activity: 2026-02-09 — Completed plan 02-01
 
-Progress: [█████░░░░░] 18%
+Progress: [██████░░░░] 24%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 3 min
-- Total execution time: 0.13 hours
+- Total plans completed: 4
+- Average duration: 2 min
+- Total execution time: 0.15 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1 - Core Infrastructure | 3 | 8 min | 3 min |
+| 2 - Browser Input Capture | 1 | 1 min | 1 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (3 min), 01-02 (3 min), 01-03 (2 min)
-- Trend: Improving velocity
+- Last 5 plans: 01-01 (3 min), 01-02 (3 min), 01-03 (2 min), 02-01 (1 min)
+- Trend: Excellent velocity
 
 *Updated after each plan completion*
 
@@ -58,6 +59,10 @@ Recent decisions affecting current work:
 - Keyboard events strict FIFO, never dropped (01-03: correctness requirement)
 - Flush pending mouse on keyboard arrival (01-03: maintains logical ordering)
 - asyncio.Lock for thread safety (01-03: concurrent access from WebSocket)
+- Normalized coordinates (0-1 range) for mouse input (02-01: resolution-independent mapping)
+- Canvas crosshair cursor (02-01: visual feedback for input capture mode)
+- Window mouseup listener (02-01: catches releases outside canvas bounds)
+- Dark canvas background #1a1a2e (02-01: reduces eye strain)
 
 ### Pending Todos
 
@@ -70,5 +75,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-09
-Stopped at: Completed 01-03-PLAN.md execution
-Resume file: .planning/phases/01-core-infrastructure/01-03-SUMMARY.md
+Stopped at: Completed 02-01-PLAN.md execution
+Resume file: .planning/phases/02-browser-input-capture/02-01-SUMMARY.md
