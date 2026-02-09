@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-09)
 
 **Core value:** Reliable real-time relay of mouse position and keyboard input from web browser to host macOS system.
-**Current focus:** Phase 1 - Core Infrastructure
+**Current focus:** Phase 5 - Setup & Documentation
 
 ## Current Position
 
-Phase: 4 of 5 (Coordinate Mapping)
-Plan: 2 of 3 in current phase
-Status: In progress
-Last activity: 2026-02-09 — Completed plan 04-02
+Phase: 5 of 5 (Setup & Documentation)
+Plan: 1 of 1 in current phase
+Status: Complete
+Last activity: 2026-02-09 — Completed plan 05-01
 
-Progress: [█████████░] 53%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 9
-- Average duration: 4 min
-- Total execution time: 1.09 hours
+- Total plans completed: 10
+- Average duration: 3 min
+- Total execution time: 1.10 hours
 
 **By Phase:**
 
@@ -31,9 +31,10 @@ Progress: [█████████░] 53%
 | 2 - Browser Input Capture | 2 | 25 min | 13 min |
 | 3 - macOS Control Integration | 2 | 17 min | 9 min |
 | 4 - Coordinate Mapping | 2 | 3 min | 2 min |
+| 5 - Setup & Documentation | 1 | 1 min | 1 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-01 (2 min), 03-02 (15 min), 04-01 (2 min), 04-02 (1 min)
+- Last 5 plans: 03-02 (15 min), 04-01 (2 min), 04-02 (1 min), 05-01 (1 min)
 - Trend: Excellent velocity
 
 *Updated after each plan completion*
@@ -83,6 +84,7 @@ Recent decisions affecting current work:
 - Browser repeat event deduplication (04-01: server timer controls all repeats)
 - [Phase 04-02]: Human verification required for Retina display coordinate accuracy (COORD-04)
 - [Phase 04-02]: Corner mapping requires physical hardware testing (COORD-05)
+- [Phase 05]: Include macOS Sequoia permission reset warning in README (sets correct expectations, reduces support burden)
 
 ### Pending Todos
 
@@ -95,5 +97,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-09
-Stopped at: Completed 04-02-PLAN.md execution
-Resume file: .planning/phases/04-coordinate-mapping/04-02-SUMMARY.md
+Stopped at: Completed 05-01-PLAN.md execution - ALL PHASES COMPLETE
+Resume file: .planning/phases/05-setup-documentation/05-01-SUMMARY.md
