@@ -147,6 +147,7 @@
                 // Calculate normalized coordinates (0-1 range) with 5 decimal precision
                 const x = roundCoord(e.offsetX / canvas.width);
                 const y = roundCoord(e.offsetY / canvas.height);
+                console.log(`Mouse: x=${x.toFixed(5)}, y=${y.toFixed(5)} (raw: ${e.offsetX / canvas.width}, ${e.offsetY / canvas.height})`);
                 ws.send(JSON.stringify({
                     type: 'mouse_move',
                     data: { x, y, timestamp: Date.now() }
