@@ -3,6 +3,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 from whip.protocol import MessageType
+from whip.queue import EventQueue
 
 app = FastAPI(title="WHIP - Web Host Input Protocol")
 
@@ -33,6 +34,7 @@ class ConnectionManager:
 
 
 manager = ConnectionManager()
+event_queue = EventQueue()
 
 
 @app.get("/")
@@ -56,8 +58,13 @@ async def websocket_endpoint(websocket: WebSocket):
             elif msg_type == MessageType.PING:
                 await websocket.send_json({"type": MessageType.PONG})
             else:
-                # Acknowledge other message types
-                await websocket.send_json({"type": "ack", "received": msg_type})
+                # Queue for processing (Phase 3 will consume)
+                await event_queue.put(data)
+                await websocket.send_json({
+                    "type": "ack",
+                    "received": msg_type,
+                    "queue_size": event_queue.backlog_size
+                })
 
     except WebSocketDisconnect:
         manager.disconnect()
