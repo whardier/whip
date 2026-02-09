@@ -62,6 +62,7 @@ manager = ConnectionManager()
 event_queue = EventQueue()
 input_controller: InputController | None = None
 repeat_manager: KeyRepeatManager | None = None
+_keys_pressed: set[str] = set()
 
 
 async def event_consumer():
@@ -71,7 +72,7 @@ async def event_consumer():
     the async event loop (pynput operations are synchronous).
     """
     import asyncio
-    global input_controller, repeat_manager
+    global input_controller, repeat_manager, _keys_pressed
     if input_controller is None:
         return
 
@@ -104,13 +105,21 @@ async def event_consumer():
             elif msg_type == MessageType.KEY_DOWN:
                 key = data.get("key", "")
                 code = data.get("code", "")
-                await loop.run_in_executor(None, input_controller.key_down, key, code)
-                # Start repeat timer for this key
-                if repeat_manager is not None:
-                    repeat_manager.start_repeat(key, code)
+
+                # Only process if this is a new key press (not browser repeat)
+                if key not in _keys_pressed:
+                    _keys_pressed.add(key)
+                    await loop.run_in_executor(None, input_controller.key_down, key, code)
+                    # Start repeat timer for this key
+                    if repeat_manager is not None:
+                        repeat_manager.start_repeat(key, code)
+                # else: ignore browser repeat events
+
             elif msg_type == MessageType.KEY_UP:
                 key = data.get("key", "")
                 code = data.get("code", "")
+                # Remove from pressed keys set
+                _keys_pressed.discard(key)
                 # Stop repeat timer before releasing key
                 if repeat_manager is not None:
                     repeat_manager.stop_repeat(key)
