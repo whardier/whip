@@ -5,11 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WHIP - Web Host Input Protocol</title>
     <style>
-        body {
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        #input-canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a2e;
+            cursor: crosshair;
+        }
+        #status-overlay {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 12px;
+            border-radius: 4px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            font-size: 12px;
+            color: white;
+            pointer-events: none;
         }
         .status-indicator {
             display: inline-block;
@@ -17,6 +37,7 @@
             height: 10px;
             border-radius: 50%;
             margin-right: 8px;
+            vertical-align: middle;
         }
         .status-indicator.connected {
             background-color: #4ade80;
@@ -27,85 +48,46 @@
         .status-indicator.connecting {
             background-color: #fbbf24;
         }
-        #message-log {
-            border: 1px solid #ddd;
-            padding: 10px;
-            max-height: 300px;
-            overflow-y: auto;
-            background-color: #f9f9f9;
-            font-family: monospace;
-            font-size: 12px;
-        }
-        .message-item {
-            margin: 4px 0;
-            padding: 4px;
-        }
-        .message-sent {
-            color: #2563eb;
-        }
-        .message-received {
-            color: #059669;
-        }
-        button {
-            padding: 8px 16px;
-            font-size: 14px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
-    <h1>WHIP Control Interface</h1>
-    <p>Web-based remote control for macOS</p>
-
-    <div id="connection-status">
-        <p>
-            <span class="status-indicator disconnected" id="status-dot"></span>
-            Status: <span id="status-text">Connecting...</span>
-        </p>
+    <canvas id="input-canvas" tabindex="0"></canvas>
+    <div id="status-overlay">
+        <span class="status-indicator disconnected" id="status-dot"></span>
+        <span id="status-text">Connecting...</span>
     </div>
-
-    <div>
-        <button id="test-btn" disabled>Send Test Message</button>
-    </div>
-
-    <h3>Message Log</h3>
-    <div id="message-log"></div>
 
     <script>
         let ws = null;
         let reconnectAttempts = 0;
         const maxReconnectAttempts = 5;
 
+        const canvas = document.getElementById('input-canvas');
         const statusDot = document.getElementById('status-dot');
         const statusText = document.getElementById('status-text');
-        const testBtn = document.getElementById('test-btn');
-        const messageLog = document.getElementById('message-log');
+
+        // Canvas resize handling
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas(); // Initialize on load
 
         function updateStatus(status) {
             statusDot.className = 'status-indicator ' + status;
             switch(status) {
                 case 'connected':
                     statusText.textContent = 'Connected';
-                    testBtn.disabled = false;
                     break;
                 case 'disconnected':
                     statusText.textContent = 'Disconnected';
-                    testBtn.disabled = true;
                     break;
                 case 'connecting':
                     statusText.textContent = 'Connecting...';
-                    testBtn.disabled = true;
                     break;
             }
-        }
-
-        function logMessage(direction, message) {
-            const item = document.createElement('div');
-            item.className = 'message-item message-' + direction;
-            const timestamp = new Date().toLocaleTimeString();
-            item.textContent = `[${timestamp}] ${direction.toUpperCase()}: ${JSON.stringify(message)}`;
-            messageLog.appendChild(item);
-            messageLog.scrollTop = messageLog.scrollHeight;
         }
 
         function connect() {
@@ -120,46 +102,28 @@
             ws.onopen = function() {
                 updateStatus('connected');
                 reconnectAttempts = 0;
-                logMessage('system', { event: 'connected' });
             };
 
             ws.onmessage = function(event) {
                 const message = JSON.parse(event.data);
-                logMessage('received', message);
+                // Future: handle server messages
             };
 
             ws.onerror = function(error) {
                 console.error('WebSocket error:', error);
-                logMessage('system', { event: 'error', details: 'Connection error' });
             };
 
             ws.onclose = function() {
                 updateStatus('disconnected');
-                logMessage('system', { event: 'closed' });
 
                 // Auto-reconnect with exponential backoff
                 if (reconnectAttempts < maxReconnectAttempts) {
                     reconnectAttempts++;
                     const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 10000);
-                    logMessage('system', { event: 'reconnecting', delay_ms: delay });
                     setTimeout(connect, delay);
-                } else {
-                    logMessage('system', { event: 'gave_up', reason: 'max_reconnect_attempts_reached' });
                 }
             };
         }
-
-        testBtn.addEventListener('click', function() {
-            if (ws && ws.readyState === WebSocket.OPEN) {
-                const message = {
-                    type: 'echo',
-                    data: { message: 'Test message from browser' },
-                    timestamp: Date.now()
-                };
-                ws.send(JSON.stringify(message));
-                logMessage('sent', message);
-            }
-        });
 
         // Start connection on page load
         connect();
