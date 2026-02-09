@@ -63,10 +63,17 @@ input_controller: InputController | None = None
 
 
 async def event_consumer():
-    """Background task that drains event queue and controls macOS input."""
+    """Background task that drains event queue and controls macOS input.
+
+    Runs InputController operations in a thread executor to prevent blocking
+    the async event loop (pynput operations are synchronous).
+    """
+    import asyncio
     global input_controller
     if input_controller is None:
         return
+
+    loop = asyncio.get_event_loop()
 
     while True:
         event = await event_queue.get_blocking(timeout=0.05)
@@ -77,16 +84,29 @@ async def event_consumer():
             msg_type = event.get("type")
             data = event.get("data", {})
 
+            # Run InputController operations in thread executor to avoid blocking
             if msg_type == MessageType.MOUSE_MOVE:
-                input_controller.move_mouse(data.get("x", 0), data.get("y", 0))
+                await loop.run_in_executor(
+                    None, input_controller.move_mouse, data.get("x", 0), data.get("y", 0)
+                )
             elif msg_type == MessageType.MOUSE_DOWN:
-                input_controller.mouse_down(data.get("button", "left"), data.get("x", 0), data.get("y", 0))
+                await loop.run_in_executor(
+                    None, input_controller.mouse_down, data.get("button", "left"),
+                    data.get("x", 0), data.get("y", 0)
+                )
             elif msg_type == MessageType.MOUSE_UP:
-                input_controller.mouse_up(data.get("button", "left"), data.get("x", 0), data.get("y", 0))
+                await loop.run_in_executor(
+                    None, input_controller.mouse_up, data.get("button", "left"),
+                    data.get("x", 0), data.get("y", 0)
+                )
             elif msg_type == MessageType.KEY_DOWN:
-                input_controller.key_down(data.get("key", ""), data.get("code", ""))
+                await loop.run_in_executor(
+                    None, input_controller.key_down, data.get("key", ""), data.get("code", "")
+                )
             elif msg_type == MessageType.KEY_UP:
-                input_controller.key_up(data.get("key", ""), data.get("code", ""))
+                await loop.run_in_executor(
+                    None, input_controller.key_up, data.get("key", ""), data.get("code", "")
+                )
         except Exception as e:
             logger.error(f"Event processing failed: {e}", exc_info=True)
 
