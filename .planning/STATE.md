@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-09)
 ## Current Position
 
 Phase: 1 of 5 (Core Infrastructure)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: Executing
-Last activity: 2026-02-09 — Completed plan 01-01
+Last activity: 2026-02-09 — Completed plan 01-02
 
-Progress: [██░░░░░░░░] 6%
+Progress: [████░░░░░░] 12%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
+- Total plans completed: 2
 - Average duration: 3 min
-- Total execution time: 0.05 hours
+- Total execution time: 0.1 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 - Core Infrastructure | 1 | 3 min | 3 min |
+| 1 - Core Infrastructure | 2 | 6 min | 3 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (3 min)
-- Trend: Just started
+- Last 5 plans: 01-01 (3 min), 01-02 (3 min)
+- Trend: Consistent velocity
 
 *Updated after each plan completion*
 
@@ -50,6 +50,10 @@ Recent decisions affecting current work:
 - Use uv for package management (01-01: modern, fast Python package manager)
 - Port 9447 for server (01-01: spells WHIP on phone keypad)
 - 120 character line length (01-01: better for modern screens)
+- StrEnum for message types (01-02: JSON serialization compatibility with type safety)
+- Single connection limit (01-02: MVP simplification for single-user use case)
+- JSON protocol over binary (01-02: easier debugging, sufficient performance)
+- Client-side auto-reconnect (01-02: better UX for network reliability)
 
 ### Pending Todos
 
@@ -62,5 +66,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-09
-Stopped at: Completed 01-01-PLAN.md execution
-Resume file: .planning/phases/01-core-infrastructure/01-01-SUMMARY.md
+Stopped at: Completed 01-02-PLAN.md execution
+Resume file: .planning/phases/01-core-infrastructure/01-02-SUMMARY.md
