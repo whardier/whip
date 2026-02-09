@@ -136,12 +136,17 @@
             }
         }
 
+        // Round coordinate to 5 decimal places for precision
+        function roundCoord(value) {
+            return Math.round(value * 100000) / 100000;
+        }
+
         // Mouse move event handler
         canvas.addEventListener('mousemove', (e) => {
             if (ws && ws.readyState === WebSocket.OPEN) {
-                // Calculate normalized coordinates (0-1 range)
-                const x = e.offsetX / canvas.width;
-                const y = e.offsetY / canvas.height;
+                // Calculate normalized coordinates (0-1 range) with 5 decimal precision
+                const x = roundCoord(e.offsetX / canvas.width);
+                const y = roundCoord(e.offsetY / canvas.height);
                 ws.send(JSON.stringify({
                     type: 'mouse_move',
                     data: { x, y, timestamp: Date.now() }
@@ -154,8 +159,8 @@
             e.preventDefault(); // Prevents text selection start and middle-click auto-scroll
             canvas.focus(); // Ensure keyboard events work after mouse interaction
             if (ws && ws.readyState === WebSocket.OPEN) {
-                const x = e.offsetX / canvas.width;
-                const y = e.offsetY / canvas.height;
+                const x = roundCoord(e.offsetX / canvas.width);
+                const y = roundCoord(e.offsetY / canvas.height);
                 ws.send(JSON.stringify({
                     type: 'mouse_down',
                     data: { button: getButtonName(e.button), x, y }
@@ -166,8 +171,8 @@
         // Mouse up event handler
         canvas.addEventListener('mouseup', (e) => {
             if (ws && ws.readyState === WebSocket.OPEN) {
-                const x = e.offsetX / canvas.width;
-                const y = e.offsetY / canvas.height;
+                const x = roundCoord(e.offsetX / canvas.width);
+                const y = roundCoord(e.offsetY / canvas.height);
                 ws.send(JSON.stringify({
                     type: 'mouse_up',
                     data: { button: getButtonName(e.button), x, y }
