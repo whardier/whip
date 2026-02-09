@@ -19,3 +19,7 @@ line-length = 120
 
 [tool.pyright]
 typeCheckingMode = "basic"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
