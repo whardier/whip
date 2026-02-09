@@ -102,6 +102,7 @@
             ws.onopen = function() {
                 updateStatus('connected');
                 reconnectAttempts = 0;
+                canvas.focus(); // Auto-focus canvas on connection
             };
 
             ws.onmessage = function(event) {
@@ -180,6 +181,35 @@
                 ws.send(JSON.stringify({
                     type: 'mouse_up',
                     data: { button: getButtonName(e.button), x: -1, y: -1 }
+                }));
+            }
+        });
+
+        // Keyboard down event handler
+        canvas.addEventListener('keydown', (e) => {
+            // Skip if key is being held (auto-repeat)
+            if (e.repeat) return;
+
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({
+                    type: 'key_down',
+                    data: {
+                        key: e.key,    // Character value: "a", "Enter", "ArrowUp"
+                        code: e.code   // Physical key: "KeyA", "Enter", "ArrowUp"
+                    }
+                }));
+            }
+        });
+
+        // Keyboard up event handler
+        canvas.addEventListener('keyup', (e) => {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({
+                    type: 'key_up',
+                    data: {
+                        key: e.key,
+                        code: e.code
+                    }
                 }));
             }
         });
