@@ -151,6 +151,7 @@
 
         // Mouse down event handler
         canvas.addEventListener('mousedown', (e) => {
+            e.preventDefault(); // Prevents text selection start and middle-click auto-scroll
             canvas.focus(); // Ensure keyboard events work after mouse interaction
             if (ws && ws.readyState === WebSocket.OPEN) {
                 const x = e.offsetX / canvas.width;
@@ -187,6 +188,17 @@
 
         // Keyboard down event handler
         canvas.addEventListener('keydown', (e) => {
+            // Don't capture if Ctrl/Cmd is pressed (allow browser shortcuts)
+            if (e.ctrlKey || e.metaKey) {
+                return; // Let browser handle Ctrl+C, Cmd+R, etc.
+            }
+
+            // Prevent default for navigation keys
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
+                 ' ', 'Tab', 'Home', 'End', 'PageUp', 'PageDown'].includes(e.key)) {
+                e.preventDefault();
+            }
+
             // Skip if key is being held (auto-repeat)
             if (e.repeat) return;
 
@@ -212,6 +224,11 @@
                     }
                 }));
             }
+        });
+
+        // Prevent context menu on right-click
+        canvas.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
         });
 
         // Start connection on page load
