@@ -1,6 +1,21 @@
 # whip
 
-Web-based remote control for macOS - relay mouse and keyboard input from any browser to your Mac.
+> Web-based remote control for macOS - relay mouse and keyboard input from any browser to your Mac.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [macOS Accessibility Permissions](#macos-accessibility-permissions)
+- [Running the Server](#running-the-server)
+- [Accessing the Interface](#accessing-the-interface)
+- [How It Works](#how-it-works)
+- [Port Number](#port-number)
+- [Security Considerations](#security-considerations)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Overview
 
@@ -20,7 +35,7 @@ Use cases include controlling your Mac from a phone or tablet, assistive technol
 
 ```bash
 # Clone the repository
-git clone <repo-url>
+git clone https://github.com/whardier/whip.git
 cd whip
 
 # Install dependencies with uv
@@ -102,3 +117,78 @@ The canvas uses absolute positioning, so clicking anywhere on the canvas moves y
 ## Port Number
 
 The default port is 9447, which spells "WHIP" on a phone keypad (9=W, 4=H, 4=I, 7=P).
+
+## Security Considerations
+
+**Important**: whip allows remote control of your Mac's mouse and keyboard. Follow these security practices:
+
+- Only run whip on **trusted local networks** - never expose it directly to the internet
+- The server binds to `0.0.0.0` by default for local network access - change to `127.0.0.1` if you only need localhost access
+- Consider using firewall rules to restrict access to specific IP addresses
+- There is no authentication built-in - anyone who can reach the port can control your Mac
+- Always stop the server when not in use
+
+## Development
+
+### Running Tests
+
+The project uses pytest for testing:
+
+```bash
+# Install with dev dependencies
+uv sync --extra dev
+
+# Run tests
+uv run pytest
+
+# Run with coverage
+uv run pytest --cov=whip
+```
+
+### Code Quality
+
+The project uses ruff for linting and pyright for type checking:
+
+```bash
+# Lint code
+uv run ruff check .
+
+# Format code
+uv run ruff format .
+
+# Type check
+uv run pyright
+```
+
+### Project Structure
+
+```
+whip/
+├── src/whip/          # Main package
+│   └── main.py        # FastAPI application
+├── static/            # Web interface files
+├── tests/             # Test suite
+└── pyproject.toml     # Project configuration
+```
+
+## Contributing
+
+Contributions are welcome! Here's how to get started:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests and linting (`uv run pytest && uv run ruff check .`)
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to your branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+## License
+
+This project does not currently have a license. Please contact the repository owner for usage terms and permissions.
+
+## Acknowledgments
+
+- Built with [FastAPI](https://fastapi.tiangolo.com/) for the web server
+- Uses [pynput](https://pynput.readthedocs.io/) for system-level input control
+- Served with [uvicorn](https://www.uvicorn.org/) ASGI server
