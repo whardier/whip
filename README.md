@@ -1,4 +1,4 @@
-# whip
+# WHIP: Web Host Interaction Platform
 
 > Web-based remote control for macOS - relay mouse and keyboard input from any browser to your Mac.
 
@@ -19,7 +19,7 @@
 
 ## Overview
 
-whip is a minimal web application that captures mouse movements and keyboard input from a web browser and relays them to the host macOS system in real-time. Access a blank canvas in your browser from any device on your local network, and control your Mac's cursor and keyboard as if you were sitting at the machine.
+**WHIP** (Web Host Interaction Platform) is a minimal web application that captures mouse movements and keyboard input from a web browser and relays them to the host macOS system in real-time. Access a blank canvas in your browser from any device on your local network, and control your Mac's cursor and keyboard as if you were sitting at the machine.
 
 Use cases include controlling your Mac from a phone or tablet, assistive technology applications, and remote demonstrations where you need precise input control.
 
@@ -116,7 +116,7 @@ The canvas uses absolute positioning, so clicking anywhere on the canvas moves y
 
 ## Port Number
 
-The default port is 9447, which spells "WHIP" on a phone keypad (9=W, 4=H, 4=I, 7=P).
+The default port is **9447**, which spells "WHIP" on a phone keypad (9=W, 4=H, 4=I, 7=P) - a fitting choice for the **W**eb **H**ost **I**nteraction **P**latform.
 
 ## Security Considerations
 

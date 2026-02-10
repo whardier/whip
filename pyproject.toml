@@ -1,7 +1,7 @@
 [project]
 name = "whip"
 version = "0.1.0"
-description = "Web-based remote control for macOS - mouse and keyboard relay via browser"
+description = "WHIP: Web Host Interaction Platform - Web-based remote control for macOS"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi~=0.115.0",
